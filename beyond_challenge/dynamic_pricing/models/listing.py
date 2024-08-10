@@ -1,7 +1,14 @@
 from enum import Enum
 from uuid import uuid4
 from django.core.validators import MinValueValidator
-from django.db.models import DO_NOTHING, CharField, DecimalField, ForeignKey, UUIDField
+from django.db.models import (
+    DO_NOTHING,
+    CharField,
+    DateTimeField,
+    DecimalField,
+    ForeignKey,
+    UUIDField,
+)
 from django.db.models.expressions import Decimal
 
 from dynamic_pricing.models.base_model import BaseModel
@@ -29,3 +36,4 @@ class Listing(BaseModel):
             return tuple((i.name, i.value) for i in cls)
 
     currency = CharField(max_length=150, choices=Currency.choices())
+    created_at = DateTimeField(auto_now_add=True)

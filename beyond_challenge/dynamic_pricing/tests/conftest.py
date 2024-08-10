@@ -1,4 +1,5 @@
 from django.db.models.expressions import Decimal
+from rest_framework.test import APIClient
 from dynamic_pricing.models.listing import Listing
 from dynamic_pricing.models.rule import Rule
 import pytest
@@ -43,8 +44,27 @@ def invalid_listing():
 @pytest.fixture
 def valid_listing(persisted_market):
     return Listing(
-        title="lof paris",
+        title="loft paris",
         base_price=Decimal("500"),
         market=persisted_market,
         currency="EUR",
     )
+
+
+@pytest.fixture
+def list_of_listings(valid_rule):
+    return [
+        Listing.objects.create(
+            title=f"Test entry #{i}",
+            base_price=Decimal(f"{100 + i}"),
+            market=valid_rule.market,
+            currency="USD",
+            host_name=f"Host #{i}"
+        )
+        for i in range(50)
+    ]
+
+
+@pytest.fixture
+def client():
+    return APIClient()

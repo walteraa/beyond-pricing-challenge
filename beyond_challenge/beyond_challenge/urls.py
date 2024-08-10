@@ -18,6 +18,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from dynamic_pricing.views.listing_view import ListingView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("listings", ListingView.as_view())
 ]
