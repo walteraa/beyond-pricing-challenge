@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=beyond_db
+      - POSTGRES_USER=beyond_user
+      - POSTGRES_PASSWORD=beyond_pass
+  api:
+    build: .
+    command: ["./bin/wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/beyond_challenge
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=beyond_db
+      - DB_USER=beyond_user
+      - DB_PASSWORD=beyond_pass
+      - DB_HOST=db
+      - DB_PORT=5432
+
+    depends_on:
+      - db
