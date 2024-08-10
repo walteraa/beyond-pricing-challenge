@@ -3,3 +3,5 @@ django_rest_framework
 black
 pylint
 psycopg2-binary
+pytest
+pytest-django
