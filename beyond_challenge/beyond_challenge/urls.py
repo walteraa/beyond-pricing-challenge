@@ -21,6 +21,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from dynamic_pricing.views.listing_calendar_view import ListingCalendarView
 from dynamic_pricing.views.listing_details_view import ListingDetailsView
 from dynamic_pricing.views.listing_view import ListingView
 
@@ -43,6 +44,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("listings", ListingView.as_view()),
     path("listings/<uuid:listing_id>", ListingDetailsView.as_view()),
+    path("listings/<uuid:listing_id>/calendar", ListingCalendarView.as_view()),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

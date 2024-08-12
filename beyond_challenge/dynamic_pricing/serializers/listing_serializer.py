@@ -29,7 +29,7 @@ class ListingSerializer(Serializer):
         },
     }
 
-    id = UUIDField(required=False)
+    id = UUIDField(required=False, read_only=True)
     title = CharField(max_length=255)
     market = CharField(max_length=255)
     base_price = DecimalField(max_digits=10, decimal_places=2)

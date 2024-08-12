@@ -116,6 +116,7 @@ def test_post_sucessfully_with_non_existing_market(client, currency):
 
     assert Market.objects.count() == previous_market_count + 1
 
+
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "currency", [currency[0] for currency in Listing.Currency.choices()]
@@ -124,13 +125,18 @@ def test_fail_missing_params(client, currency):
     params = {
         "currency": currency,
     }
-    
+
     response = client.post(
         "/listings", data=json.dumps(params), content_type="application/json"
     )
-    
+
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert response.json() == {"title": ["This field is required."], "market": ["This field is required."], "base_price": ["This field is required."]}
+    assert response.json() == {
+        "title": ["This field is required."],
+        "market": ["This field is required."],
+        "base_price": ["This field is required."],
+    }
+
 
 @pytest.mark.django_db
 def test_post_fail_due_to_invalid_currency(client):
@@ -146,4 +152,6 @@ def test_post_fail_due_to_invalid_currency(client):
     )
 
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
-    assert response.json() == {"errors": {"currency": ["Value 'BRL' is not a valid choice."]}}
+    assert response.json() == {
+        "errors": {"currency": ["Value 'BRL' is not a valid choice."]}
+    }

@@ -811,4 +811,74 @@ dynamic_pricing/tests/use_cases/build_calendar_test.py: 2 warnings
 ================================================ 51 passed, 105 warnings in 1.69s ================================================
 ```
 
+<h2> Extra implementation </h2>
+
+In order to add some extra feature, I've implemented a wayfor us to see the list by requesting `localhost:8000/listing/:listing_id/calendar`, in that we we can see only the calendar virtual list and also we can apply date filters and the same currency conversion in the main feature:
+
+```
+$curl --silent --location --request GET 'http://localhost:8000/listings/3a6a28d3-2bb9-4f7b-9dad-a60256e92f75/calendar?start_date=2025-07-30&end_date=2025-08-03' | jq
+
+[
+  {
+    "date": "2025-07-30",
+    "price": 500.0,
+    "currency": "USD"
+  },
+  {
+    "date": "2025-07-31",
+    "price": 500.0,
+    "currency": "USD"
+  },
+  {
+    "date": "2025-08-01",
+    "price": 625.0,
+    "currency": "USD"
+  },
+  {
+    "date": "2025-08-02",
+    "price": 500.0,
+    "currency": "USD"
+  },
+  {
+    "date": "2025-08-03",
+    "price": 500.0,
+    "currency": "USD"
+  }
+]
+```
+
+```
+$ curl --silent --location --request GET 'http://localhost:8000/listings/3a6a28d3-2bb9-4f7b-9dad-a60256e92f75/calendar?start_date=2025-07-30&end_date=2025-08-03&currency=BRL' | jq
+
+[
+  {
+    "date": "2025-07-30",
+    "price": 1500.0,
+    "currency": "BRL"
+  },
+  {
+    "date": "2025-07-31",
+    "price": 1500.0,
+    "currency": "BRL"
+  },
+  {
+    "date": "2025-08-01",
+    "price": 1875.0,
+    "currency": "BRL"
+  },
+  {
+    "date": "2025-08-02",
+    "price": 1500.0,
+    "currency": "BRL"
+  },
+  {
+    "date": "2025-08-03",
+    "price": 1500.0,
+    "currency": "BRL"
+  }
+]
+```
+
+It is also available in the documentation swagger and redoc.
+
 

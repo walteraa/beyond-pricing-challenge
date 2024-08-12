@@ -73,7 +73,7 @@ class ListingView(APIView):
     )
     def post(self, request):
         serializer = ListingSerializer(data=request.data)
-
+        
         if serializer.is_valid():
             listing = CreateListing.call(**serializer.data)
 
