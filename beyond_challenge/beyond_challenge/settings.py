@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "dynamic_pricing",
-    "django_redis"
+    "django_redis",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [

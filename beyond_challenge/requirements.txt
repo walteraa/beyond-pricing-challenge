@@ -11,9 +11,11 @@ Django==5.1
 django-redis==5.4.0
 django-rest-framework==0.1.0
 djangorestframework==3.15.2
+drf-yasg==1.21.7
 executing==2.0.1
 freezegun==1.5.1
 idna==3.7
+inflection==0.5.1
 iniconfig==2.0.0
 ipython==8.26.0
 isort==5.13.2
@@ -38,6 +40,8 @@ pytest-django==4.8.0
 pytest-freezegun==0.4.2
 pytest-mock==3.14.0
 python-dateutil==2.9.0.post0
+pytz==2024.1
+PyYAML==6.0.2
 redis==5.0.8
 requests==2.32.3
 requests-mock==1.12.1
@@ -47,6 +51,7 @@ sqlparse==0.5.1
 stack-data==0.6.3
 tomlkit==0.13.0
 traitlets==5.14.3
+uritemplate==4.1.1
 urllib3==2.2.2
 wcwidth==0.2.13
 wheel==0.44.0

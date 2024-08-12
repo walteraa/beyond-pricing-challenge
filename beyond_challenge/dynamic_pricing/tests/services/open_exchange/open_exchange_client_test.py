@@ -42,5 +42,7 @@ def test_fail_due_to_integration_error():
             status_code=400,
         )
 
-        with pytest.raises(IntegrationError, match="Error when integrating to OpenExchange"):
+        with pytest.raises(
+            IntegrationError, match="Error when integrating to OpenExchange"
+        ):
             OpenExchangeClient().latest_rate("BRL")

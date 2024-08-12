@@ -17,12 +17,33 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 from dynamic_pricing.views.listing_details_view import ListingDetailsView
 from dynamic_pricing.views.listing_view import ListingView
 
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Dynamic Pricing API",
+      default_version='v0',
+      description="This is the documentation for Beyond dynamic pricing test",
+      terms_of_service="",
+      contact=openapi.Contact(email="walter.arruda.alvest@gmail.com"),
+      license=openapi.License(name="MIT License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("listings", ListingView.as_view()),
-    path("listings/<uuid:listing_id>", ListingDetailsView.as_view())
+    path("listings/<uuid:listing_id>", ListingDetailsView.as_view()),
+    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

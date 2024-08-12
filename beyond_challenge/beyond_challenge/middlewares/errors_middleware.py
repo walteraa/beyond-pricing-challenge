@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.urls.exceptions import Http404
 from rest_framework.response import Response
 from rest_framework.views import status
@@ -37,7 +38,10 @@ class ErrorsMiddleware:
             response = Response({"message": e.args[0]}, status=status.HTTP_400_BAD_REQUEST)
         elif isinstance(e, IntegrationError):
             response = Response({"message": e.args[0]}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        elif isinstance(e, ValidationError):
+            response = Response({"errors": e.message_dict}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         else:
+            breakpoint()
             response = Response({"message": "Internal error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         response.accepted_renderer = JSONRenderer()
