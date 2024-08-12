@@ -46,6 +46,8 @@ def test_create_successfully_existing_market(currency, persisted_market):
         "currency": currency,
     }
 
+    
+
     result = CreateListing.call(**params)
 
     assert Listing.objects.count() == previous_count + 1

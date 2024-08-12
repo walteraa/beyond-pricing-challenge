@@ -39,6 +39,6 @@ def test_valid(valid_rule):
 
     assert Rule.objects.count() == previous_count + 1
 
-    market = Market.objects.first()
+    market = Market.objects.filter(label="paris-orly").first()
 
     assert valid_rule in market.rules.all()

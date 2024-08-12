@@ -13,7 +13,7 @@ def invalid_market():
 
 @pytest.fixture
 def valid_market():
-    return Market(label="paris")
+    return Market(label="paris-orly")
 
 
 @pytest.fixture

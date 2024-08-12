@@ -7,7 +7,7 @@ from dynamic_pricing.models.base_model import BaseModel
 class Market(BaseModel):
     id = UUIDField(default=uuid4, unique=True, primary_key=True, editable=False)
 
-    label = CharField(max_length=255, blank=False, null=False)
+    label = CharField(max_length=255, blank=False, null=False, unique=True)
 
     def __str__(self):
         return self.label

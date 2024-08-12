@@ -7,8 +7,6 @@ from dynamic_pricing.use_cases.get_or_create_market import GetOrCreateMarket
 def test_when_created():
     previous_count = Market.objects.count()
 
-    assert previous_count == 0
-
     GetOrCreateMarket.call("new-market")
 
     assert Market.objects.count() == previous_count + 1
@@ -17,8 +15,6 @@ def test_when_created():
 @pytest.mark.django_db
 def test_when_get(persisted_market):
     previous_count = Market.objects.count()
-
-    assert previous_count == 1
 
     GetOrCreateMarket.call(persisted_market.label)
 

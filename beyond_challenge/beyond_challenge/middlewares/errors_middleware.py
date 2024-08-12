@@ -41,7 +41,6 @@ class ErrorsMiddleware:
         elif isinstance(e, ValidationError):
             response = Response({"errors": e.message_dict}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         else:
-            breakpoint()
             response = Response({"message": "Internal error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         response.accepted_renderer = JSONRenderer()
