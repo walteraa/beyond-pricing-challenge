@@ -2,6 +2,7 @@ from typing import Optional
 from django.utils.encoding import Decimal
 from dynamic_pricing.models.market import Market
 from dynamic_pricing.models.listing import Listing
+from dynamic_pricing.use_cases.get_or_create_market import GetOrCreateMarket
 
 
 class CreateListing:
@@ -14,7 +15,8 @@ class CreateListing:
         currency: str,
         host_name: Optional[str] = None,
     ):
-        market_obj, _ = Market.objects.get_or_create(label=market.lower())
+
+        market_obj = GetOrCreateMarket.call(market)
 
         return Listing.objects.create(
             title=title,

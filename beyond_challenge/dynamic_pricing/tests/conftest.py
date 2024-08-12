@@ -52,14 +52,22 @@ def valid_listing(persisted_market):
 
 
 @pytest.fixture
+def ruled_listing(valid_listing, valid_rule):
+    valid_rule.save()
+    valid_listing.save()
+    return valid_listing
+
+
+@pytest.fixture
 def list_of_listings(valid_rule):
+    valid_rule.save()
     return [
         Listing.objects.create(
             title=f"Test entry #{i}",
             base_price=Decimal(f"{100 + i}"),
             market=valid_rule.market,
             currency="USD",
-            host_name=f"Host #{i}"
+            host_name=f"Host #{i}",
         )
         for i in range(50)
     ]
@@ -68,3 +76,16 @@ def list_of_listings(valid_rule):
 @pytest.fixture
 def client():
     return APIClient()
+
+
+@pytest.fixture
+def calendar_sample():
+    return [
+        {"date": "2025-01-13", "price": Decimal(500.0), "currency": "USD"},
+        {"date": "2025-01-14", "price": Decimal(500.0), "currency": "USD"},
+        {"date": "2025-01-15", "price": Decimal(500.0), "currency": "USD"},
+        {"date": "2025-01-16", "price": Decimal(500.0), "currency": "USD"},
+        {"date": "2025-01-17", "price": Decimal(625.0), "currency": "USD"},
+        {"date": "2025-01-18", "price": Decimal(500.0), "currency": "USD"},
+        {"date": "2025-01-19", "price": Decimal(500.0), "currency": "USD"},
+    ]

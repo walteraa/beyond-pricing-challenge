@@ -7,6 +7,10 @@ services:
       - POSTGRES_DB=beyond_db
       - POSTGRES_USER=beyond_user
       - POSTGRES_PASSWORD=beyond_pass
+  cache:
+    image: "redis:alpine"
+    ports: 
+      - "6379:8379"
   api:
     build: .
     command: ["./bin/wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
@@ -20,8 +24,13 @@ services:
       - DB_PASSWORD=beyond_pass
       - DB_HOST=db
       - DB_PORT=5432
+      - CACHE_HOST=cache
+      - CACHE_PORT=6379
+      - OPEN_EXCHANGE_BASE_URL=https://openexchangerates.org/api
+      - OPEN_EXCHANGE_APP_ID=a47db3532a104332a7fc139734396d03
 
     depends_on:
       - db
+      - cache
     stdin_open: true
     tty: true

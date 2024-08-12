@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "dynamic_pricing",
+    "django_redis"
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "beyond_challenge.middlewares.errors_middleware.ErrorsMiddleware"
 ]
 
 ROOT_URLCONF = "beyond_challenge.urls"
@@ -133,4 +135,21 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10
+}
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{os.environ.get("CACHE_HOST")}:{os.environ.get("CACHE_PORT")}/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+
+OPEN_EXCHANGE = {
+    "BASE_URL": os.environ.get("OPEN_EXCHANGE_BASE_URL"),
+    "APP_ID": os.environ.get("OPEN_EXCHANGE_APP_ID")
 }

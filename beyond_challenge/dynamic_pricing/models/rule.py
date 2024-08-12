@@ -5,8 +5,6 @@ from django.db.models import (
     CharField,
     DecimalField,
     ForeignKey,
-    IntegerChoices,
-    PositiveSmallIntegerField,
     UUIDField,
 )
 
