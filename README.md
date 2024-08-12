@@ -776,40 +776,39 @@ The tests were build by using pytest, then to run the test you just need to perf
 ```
 $ docker compose exec api pytest
 
+docker compose exec api pytest
 ================================================================================================ test session starts ================================================================================================
 platform linux -- Python 3.12.5, pytest-8.3.2, pluggy-1.5.0
-django: version: 5.1, settings: beyond_challenge.test_settings (from ini)
+django: version: 5.1, settings: beyond_challenge.settings (from ini)
 rootdir: /beyond_challenge
 configfile: pytest.ini
 plugins: requests-mock-1.12.1, mock-3.14.0, freezegun-0.4.2, django-4.8.0
-collected 43 items                                                                                                                                                                                                  
+collected 51 items                                                                                                                                                                                                  
 
 dynamic_pricing/tests/models/listing_test.py ....      
 dynamic_pricing/tests/models/market_test.py ..      
-dynamic_pricing/tests/models/rule_test.py ...  
-dynamic_pricing/tests/requests/listing_details_view_test.py ...     
-dynamic_pricing/tests/requests/listing_view_test.py .........       
-dynamic_pricing/tests/use_cases/build_calendar_test.py ..      
-dynamic_pricing/tests/use_cases/create_listing_test.py .......    
-dynamic_pricing/tests/use_cases/get_or_create_market_test.py ..    
-dynamic_pricing/tests/use_cases/get_price_based_on_rule_test.py ..   
-dynamic_pricing/tests/services/open_exchange/open_exchange_client_test.py ...  
-dynamic_pricing/tests/use_cases/convert_calendar_test.py ......  
+dynamic_pricing/tests/models/rule_test.py ...      
+dynamic_pricing/tests/requests/listing_details_view_test.py .....      
+dynamic_pricing/tests/requests/listing_view_test.py ...............    
+dynamic_pricing/tests/use_cases/build_calendar_test.py ..        
+dynamic_pricing/tests/use_cases/create_listing_test.py .......  
+dynamic_pricing/tests/use_cases/get_or_create_market_test.py ..   
+dynamic_pricing/tests/use_cases/get_price_based_on_rule_test.py ..
+dynamic_pricing/tests/services/open_exchange/open_exchange_client_test.py ... 
+dynamic_pricing/tests/use_cases/convert_calendar_test.py ......    
 
 ================================================================================================= warnings summary ==================================================================================================
 ../usr/local/lib/python3.12/site-packages/drf_yasg/__init__.py:2
   /usr/local/lib/python3.12/site-packages/drf_yasg/__init__.py:2: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
     from pkg_resources import DistributionNotFound, get_distribution
 
-../usr/local/lib/python3.12/site-packages/pytest_freezegun.py:17: 86 warnings
+../usr/local/lib/python3.12/site-packages/pytest_freezegun.py:17: 102 warnings
 dynamic_pricing/tests/use_cases/build_calendar_test.py: 2 warnings
   /usr/local/lib/python3.12/site-packages/pytest_freezegun.py:17: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
     if LooseVersion(pytest.__version__) < LooseVersion('3.6.0'):
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-========================================================================================== 
-43 passed, 89 warnings in 1.65s 
-==========================================================================================
+================================================ 51 passed, 105 warnings in 1.69s ================================================
 ```
 
 

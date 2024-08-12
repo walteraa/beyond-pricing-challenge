@@ -10,12 +10,8 @@ def create_rules_and_markets(apps, _):
     Rule = apps.get_model("dynamic_pricing", "Rule")
 
     saturday_sunday_markets = [
-            Market.objects.create(
-                label="paris"
-            ),
-            Market.objects.create(
-                label="lisbon"
-            )
+        Market.objects.create(label="paris"),
+        Market.objects.create(label="lisbon"),
     ]
 
     for market in saturday_sunday_markets:
@@ -36,8 +32,6 @@ def create_rules_and_markets(apps, _):
         day_of_week="WEDNESDAY",
         multiplier=Decimal("0.7"),
     )
-
-
 
 
 class Migration(migrations.Migration):

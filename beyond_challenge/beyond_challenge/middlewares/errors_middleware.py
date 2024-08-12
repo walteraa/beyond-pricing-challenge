@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.urls.exceptions import Http404
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework.views import status
 from dynamic_pricing.services.open_exchange.errors.invalid_currency_error import InvalidCurrencyError
@@ -40,6 +40,10 @@ class ErrorsMiddleware:
             response = Response({"message": e.args[0]}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         elif isinstance(e, ValidationError):
             response = Response({"errors": e.message_dict}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        elif isinstance(e, ObjectDoesNotExist):
+            response = Response({"message": "Not found"},
+                                status=status.HTTP_404_NOT_FOUND,
+                                content_type="application/json")
         else:
             response = Response({"message": "Internal error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

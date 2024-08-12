@@ -1,3 +1,4 @@
+from uuid import uuid4
 from django.utils.translation import Decimal
 from rest_framework.views import status
 from dynamic_pricing.models.rule import Rule
@@ -127,3 +128,29 @@ def test_successfully_when_source_not_usd_and_passing_currency(
         assert calendar[len(calendar) - 1]["date"] == (
             datetime.now() + timedelta(days=len(calendar) - 1)
         ).strftime("%Y-%m-%d")
+
+
+@pytest.mark.django_db
+def test_fail_due_to_wrong_currency(mocker, client, list_of_listings):
+    listing = list_of_listings[0]
+    listing.currency = "EUR"
+    listing.save()
+    mocked_rates = {"rates": {"EUR": 2, "BRL": 3}}
+
+    mocker.patch.object(cache, "get", return_value=None)
+    with requests_mock.Mocker() as mock_request:
+        mock_request.get(
+            f"{OpenExchangeClient().BASE_URL}/latest.json?app_id={OpenExchangeClient().APP_ID}",
+            json=mocked_rates,
+        )
+        response = client.get(f"/listings/{str(listing.id)}?currency=AAA")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.json() == {"message": "AAA is not a valid currency"}
+
+
+@pytest.mark.django_db
+def test_fail_due_to_not_found(client):
+    response = client.get(f"/listings/{str(uuid4())}")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {"message": "Not found"}
